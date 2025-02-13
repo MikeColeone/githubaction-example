@@ -44,6 +44,20 @@ jobs:
 ```
 按道理来说job之下的一级是并行执行的，但是可以通过needs关键字指定只能够顺序
 每一个yml文件代表一个工作流
+
+
+## 常见问题
+```
+Error:  Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.13.0:compile (default-compile) on project githubaction-examples: Fatal error compiling: error: release version 21 not supported -> [Help 1]
+Error:  
+Error:  To see the full stack trace of the errors, re-run Maven with the -e switch.
+Error:  Re-run Maven using the -X switch to enable full debug logging.
+Error:  
+Error:  For more information about the errors and possible solutions, please read the following articles:
+Error:  [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
+Error: Process completed with exit code 1.执行持续部署的时候出现
+```
+原因： 本地配置的java环境和workflows配置的环境不同 导致构建打包的时候出错 本地是21 但是yml文件中配置的是17
 ## Update
 
 - 25-02-12
