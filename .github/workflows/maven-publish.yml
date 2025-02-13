@@ -29,7 +29,7 @@ jobs:
         run: mvn -B package --file pom.xml
       - name: docker push
         run: |
-          docker login ${{secrets.DOCKER_LOGIN}}
+          ${{secrets.DOCKER_LOGIN}}
           docker build . ${{secrets.ALIYUN_REPOSITORY}}
           docker push ${{secrets.ALIYUN_REPOSITORY}}
   deploy:
@@ -43,7 +43,7 @@ jobs:
           username: ${{secrets.ALIYUN_USER}}
           password: ${{secrets.ALIYUN.PASSWORD}}
           script: |
-            docker login ${{secrets.DOCKER_LOGIN}}
+            ${{secrets.DOCKER_LOGIN}}
             docker stop $(docker ps -- filter ancestor=${{secrets.ALIYUN_REPOSITORY}}) 
             docker rm -v $(docker ps - filter ancestor=${{secrets.ALIYUN_REPOSITORY}} -q) 
             docker rmi -f $(docker images ${{secrets.ALIYUN_REPOSITORY}} -q)
