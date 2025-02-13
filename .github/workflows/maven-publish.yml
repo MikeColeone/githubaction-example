@@ -27,42 +27,27 @@ jobs:
           cache: maven
       - name: Build with Maven
         run: mvn -B package --file pom.xml
-#      - name: docker push
-#        run: |
-#          docker build . ${{secrets.ALIYUN_HOST}}
-#          docker push ${{secrets.ALIYUN_HOST}}
-      - name: release aliyun
-        uses: easingthemes/ssh-deploy@v2.1.5
-        env:
-            #私钥
-            SSH_PRIVATE_KEY: ${{ secrets.SECRET }}
-            #SCp参数
-            ARGS: "-rltgoDzvO --delete"
-            #源目录
-            SOURCE: "./"
-            #服务器Ip:换成你的服务器iP
-            REMOTE_HOST: ${{ secrets.ALIYUN_HOST }}
-            #用户
-            REMOTE_USER: "root"
-            #目标地址
-            TARGET: "/root/university-selection_Backend"
-#
-#  deploy:
-#    needs: [ build ]
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: deploy
-#        uses: appleboy/ssh-action@main
-#        with:
-#          host :${{}}
-#          username: ${{}}
-#          passoword :${{}}
-#          script :|
-#            ${{}}
-#            docker stop $(docker ps -- filter ancestor=${{}})
-#            docker rm -v $(docker ps - filter ancestor=${{}} -q)
-#            docker rmi -f $(docker images ${{}} -q)
-#            docker pull ${{}}
-#            docker run - p 8080:8080 -d ${{}}
-#
+      - name: docker push
+        run: |
+          docker login ${{secrets.DOCKER_LOGIN}}
+          docker build . ${{secrets.ALIYUN_REPOSITORY}}
+          docker push ${{secrets.ALIYUN_REPOSITORY}}
+  deploy:
+    needs: [ build ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: deploy
+        uses: appleboy/ssh-action@main
+        with:
+          host: ${{secrets.ALIYUN_HOST}}
+          username: ${{secrets.ALIYUN_USER}}
+          password: ${{secrets.ALIYUN.PASSWORD}}
+          script: |
+            docker login ${{secrets.DOCKER_LOGIN}}
+            docker stop $(docker ps -- filter ancestor=${{secrets.ALIYUN_REPOSITORY}}) 
+            docker rm -v $(docker ps - filter ancestor=${{secrets.ALIYUN_REPOSITORY}} -q) 
+            docker rmi -f $(docker images ${{secrets.ALIYUN_REPOSITORY}} -q)
+            docker pull ${{secrets.ALIYUN_REPOSITORY}}
+            docker run - p 8080:8080 -d ${{secrets.ALIYUN_REPOSITORY}}
+
 
