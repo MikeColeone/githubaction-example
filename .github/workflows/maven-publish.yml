@@ -25,7 +25,6 @@ jobs:
           docker build -t crpi-hh3oln0n7v6obuy2.cn-beijing.personal.cr.aliyuncs.com/${{ secrets.ALIYUN_REPOSITORY }} .
           docker push crpi-hh3oln0n7v6obuy2.cn-beijing.personal.cr.aliyuncs.com/${{ secrets.ALIYUN_REPOSITORY }}
 
-
   deploy:
     needs: [ build ]
     runs-on: ubuntu-latest
@@ -34,8 +33,8 @@ jobs:
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.ALIYUN_HOST }}
-          username: ${{ secrets.ALIYUN_USER }}
-          password: ${{ secrets.ALIYUN_PASSWORD }}
+          username: ${{ secrets.ALIYUN_USERNAME }}
+          password: ${{ secrets.ALIYUN_PASSWORD_HOST }}
           script: |
             echo "${{ secrets.ALIYUN_PASSWORD }}" | docker login --username="${{ secrets.ALIYUN_USERNAME }}" crpi-hh3oln0n7v6obuy2.cn-beijing.personal.cr.aliyuncs.com --password-stdin
             docker stop $(docker ps --filter "ancestor=crpi-hh3oln0n7v6obuy2.cn-beijing.personal.cr.aliyuncs.com/${{ secrets.ALIYUN_REPOSITORY }}" -q) || true
