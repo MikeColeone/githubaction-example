@@ -44,8 +44,8 @@ jobs:
           password: ${{secrets.ALIYUN.PASSWORD}}
           script: |
             ${{secrets.DOCKER_LOGIN}}
-            docker stop $(docker ps -- filter ancestor=${{secrets.ALIYUN_REPOSITORY}}) 
-            docker rm -v $(docker ps - filter ancestor=${{secrets.ALIYUN_REPOSITORY}} -q) 
+            docker stop $(docker ps --filter ancestor=${{secrets.ALIYUN_REPOSITORY}}) 
+            docker rm -v $(docker ps --filter ancestor=${{secrets.ALIYUN_REPOSITORY}} -q) 
             docker rmi -f $(docker images ${{secrets.ALIYUN_REPOSITORY}} -q)
             docker pull ${{secrets.ALIYUN_REPOSITORY}}
             docker run - p 8080:8080 -d ${{secrets.ALIYUN_REPOSITORY}}
