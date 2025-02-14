@@ -22,8 +22,8 @@ jobs:
       - name: Docker login and push
         run: |
           echo "${{ secrets.ALIYUN_PASSWORD }}" | docker login --username="${{ secrets.ALIYUN_USER }}" crpi-hh3oln0n7v6obuy2.cn-beijing.personal.cr.aliyuncs.com --password-stdin
-          docker build -t crpi-hh3oln0n7v6obuy2.cn-beijing.personal.cr.aliyuncs.com/${{ secrets.ALIYUN_REPOSITORY }} .
-          docker push crpi-hh3oln0n7v6obuy2.cn-beijing.personal.cr.aliyuncs.com/${{ secrets.ALIYUN_REPOSITORY }}
+          docker build -t crpi-hh3oln0n7v6obuy2.cn-beijing.personal.cr.aliyuncs.com/${{ secrets.ALIYUN_REPOSITORY }}:githubaction .
+          docker push crpi-hh3oln0n7v6obuy2.cn-beijing.personal.cr.aliyuncs.com/${{ secrets.ALIYUN_REPOSITORY }}:githubaction
 
   deploy:
     needs: [ build ]
@@ -37,8 +37,8 @@ jobs:
           password: ${{ secrets.ALIYUN_PASSWORD_HOST }}
           script: |
             echo "${{ secrets.ALIYUN_PASSWORD }}" | docker login --username="${{ secrets.ALIYUN_USER }}" crpi-hh3oln0n7v6obuy2.cn-beijing.personal.cr.aliyuncs.com --password-stdin
-            docker ps --filter "ancestor=crpi-hh3oln0n7v6obuy2.cn-beijing.personal.cr.aliyuncs.com/${{ secrets.ALIYUN_REPOSITORY }}" -q | xargs -r docker stop
-            docker ps --filter "ancestor=crpi-hh3oln0n7v6obuy2.cn-beijing.personal.cr.aliyuncs.com/${{ secrets.ALIYUN_REPOSITORY }}" -q | xargs -r docker rm -v
-            docker images "crpi-hh3oln0n7v6obuy2.cn-beijing.personal.cr.aliyuncs.com/${{ secrets.ALIYUN_REPOSITORY }}" -q | xargs -r docker rmi -f
-            docker pull crpi-hh3oln0n7v6obuy2.cn-beijing.personal.cr.aliyuncs.com/${{ secrets.ALIYUN_REPOSITORY }}
-            docker run -p 8080:8080 -d crpi-hh3oln0n7v6obuy2.cn-beijing.personal.cr.aliyuncs.com/${{ secrets.ALIYUN_REPOSITORY }}
+            docker ps --filter "ancestor=crpi-hh3oln0n7v6obuy2.cn-beijing.personal.cr.aliyuncs.com/${{ secrets.ALIYUN_REPOSITORY }}:githubaction" -q | xargs -r docker stop
+            docker ps --filter "ancestor=crpi-hh3oln0n7v6obuy2.cn-beijing.personal.cr.aliyuncs.com/${{ secrets.ALIYUN_REPOSITORY }}:githubaction" -q | xargs -r docker rm -v
+            docker images "crpi-hh3oln0n7v6obuy2.cn-beijing.personal.cr.aliyuncs.com/${{ secrets.ALIYUN_REPOSITORY }}:githubaction" -q | xargs -r docker rmi -f
+            docker pull crpi-hh3oln0n7v6obuy2.cn-beijing.personal.cr.aliyuncs.com/${{ secrets.ALIYUN_REPOSITORY }}:githubaction
+            docker run -p 8080:8080 -d crpi-hh3oln0n7v6obuy2.cn-beijing.personal.cr.aliyuncs.com/${{ secrets.ALIYUN_REPOSITORY }}:githubaction

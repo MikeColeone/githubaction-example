@@ -1,1 +1,1 @@
-GET localhost:8080/api/hello
+GET http://47.94.82.212:8080/api/hello
