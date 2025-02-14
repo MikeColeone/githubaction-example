@@ -36,9 +36,9 @@ jobs:
           username: ${{ secrets.ALIYUN_USER }}
           password: ${{ secrets.ALIYUN_PASSWORD }}
           script: |
-            echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-            docker stop $(docker ps --filter "ancestor=${{ secrets.ALIYUN_REPOSITORY }}" -q) || true
-            docker rm -v $(docker ps --filter "ancestor=${{ secrets.ALIYUN_REPOSITORY }}" -q) || true
-            docker rmi -f $(docker images "${{ secrets.ALIYUN_REPOSITORY }}" -q) || true
-            docker pull ${{ secrets.ALIYUN_REPOSITORY }}
-            docker run -p 8080:8080 -d ${{ secrets.ALIYUN_REPOSITORY }}
+            echo "${{ secrets.ALIYUN_PASSWORD }}" | docker login --username=aliyun4907879062 crpi-hh3oln0n7v6obuy2.cn-beijing.personal.cr.aliyuncs.com --password-stdin
+            docker stop $(docker ps --filter "ancestor=crpi-hh3oln0n7v6obuy2.cn-beijing.personal.cr.aliyuncs.com/${{ secrets.ALIYUN_REPOSITORY }}" -q) || true
+            docker rm -v $(docker ps --filter "ancestor=crpi-hh3oln0n7v6obuy2.cn-beijing.personal.cr.aliyuncs.com/${{ secrets.ALIYUN_REPOSITORY }}" -q) || true
+            docker rmi -f $(docker images "crpi-hh3oln0n7v6obuy2.cn-beijing.personal.cr.aliyuncs.com/${{ secrets.ALIYUN_REPOSITORY }}" -q) || true
+            docker pull crpi-hh3oln0n7v6obuy2.cn-beijing.personal.cr.aliyuncs.com/${{ secrets.ALIYUN_REPOSITORY }}
+            docker run -p 8080:8080 -d crpi-hh3oln0n7v6obuy2.cn-beijing.personal.cr.aliyuncs.com/${{ secrets.ALIYUN_REPOSITORY }}
