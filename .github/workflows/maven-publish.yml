@@ -25,6 +25,7 @@ jobs:
           docker build -t crpi-hh3oln0n7v6obuy2.cn-beijing.personal.cr.aliyuncs.com/${{ secrets.ALIYUN_REPOSITORY }} .
           docker push crpi-hh3oln0n7v6obuy2.cn-beijing.personal.cr.aliyuncs.com/${{ secrets.ALIYUN_REPOSITORY }}
 
+
   deploy:
     needs: [ build ]
     runs-on: ubuntu-latest
