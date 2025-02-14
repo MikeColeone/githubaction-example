@@ -1,5 +1,4 @@
-# 使用 openjdk:11 作为基础镜像
-FROM openjdk:11
+FROM openjdk:21
 
 # 将当前项目 target 目录下的所有 JAR 文件复制到镜像中的 /home 目录下，并命名为 githubaction.jar
 COPY ./target/*.jar /home/githubaction.jar
