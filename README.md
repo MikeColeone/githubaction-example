@@ -70,6 +70,11 @@ Error: Process completed with exit code 1.
 
 “Cannot perform an interactive login from a non - TTY device” 表明，你正尝试在没有 TTY（电传打字机，即虚拟终端）的环境中运行 docker login 命令。这种情况通常出现在自动化脚本、持续集成 / 持续部署（CI/CD）流水线或者非交互式的 shell 会话中。docker login 命令通常期望以交互式方式与用户进行交互，提示用户输入用户名和密码，但在非 TTY 环境中无法实现这一点。
 
+```
+Error response from daemon: Get "https://crpi-hh3oln0n7v6obuy2.cn-beijing.personal.cr.aliyuncs.com/v2/": unauthorized: authentication required
+Error: Process completed with exit code 1.
+
+```
 
 解决方法：
 
