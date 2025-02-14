@@ -21,7 +21,7 @@ jobs:
         run: mvn -B package --file pom.xml
       - name: Docker login and push
         run: |
-          echo "${{ secrets.ALIYUN_PASSWORD }}" | docker login --username="${{ secrets.ALIYUN_USERNAME }}" crpi-hh3oln0n7v6obuy2.cn-beijing.personal.cr.aliyuncs.com --password-stdin
+          echo "${{ secrets.ALIYUN_PASSWORD }}" | docker login --username="${{ secrets.ALIYUN_USER }}" crpi-hh3oln0n7v6obuy2.cn-beijing.personal.cr.aliyuncs.com --password-stdin
           docker build -t crpi-hh3oln0n7v6obuy2.cn-beijing.personal.cr.aliyuncs.com/${{ secrets.ALIYUN_REPOSITORY }} .
           docker push crpi-hh3oln0n7v6obuy2.cn-beijing.personal.cr.aliyuncs.com/${{ secrets.ALIYUN_REPOSITORY }}
 
