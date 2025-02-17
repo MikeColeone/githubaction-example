@@ -140,5 +140,5 @@ this version of the Java Runtime only recognizes class file versions up to 55.0
 
 
 ## Notes
-
+- 执行build失败的时候可以尝试手动拉取 手动能拉取说明是缓存问题 有的时候镜像过大也会导致构建失败 可以尝试手动拉取 dokerfile拉取基础镜像失败会直接抛出错误 执行手动拉去的时候会有retry机会
 - 直接执行docker search不能在搜索私有仓库的镜像 默认搜索位置是dockerhub
